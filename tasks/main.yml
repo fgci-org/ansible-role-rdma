@@ -1,0 +1,19 @@
+---
+# tasks file for ansible-role-rdma
+#
+- name: install rdma
+  action:
+    module: "{{ ansible_pkg_mgr }}"
+    name: rdma
+    state: present
+
+- name: install extra rdma packages
+  yum: {{ item }} states=present
+  with_items: rdma_packages
+
+- name: add infiniband udev rules
+  template: src=90-rdma.rules dest=/etc/udev/rules.d/90-rdma.rules backup=yes owner=root mode=0644
+
+- name: Enable and start rdma
+  service: name=rdma state=started enabled=yes
+
