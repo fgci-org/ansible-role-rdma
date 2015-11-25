@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/CSC-IT-Center-for-Science/ansible-role-rdma.svg)](https://travis-ci.org/CSC-IT-Center-for-Science/ansible-role-rdma)
 ansible-role-rdma
 =========
 
