@@ -3,3 +3,4 @@
 
 rdma_packages:
  - dapl
+ - infiniband-diags
