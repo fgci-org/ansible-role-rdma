@@ -4,3 +4,13 @@
 rdma_packages:
  - dapl
  - infiniband-diags
+
+# Mutually exclusive:
+# set rdma_configure_single_port to True to configure single port mlx cards
+# set rdma_configure_dual_port to True to configure dual port mlx cards
+# set the ports to eth, ib or auto
+rdma_pci_base: "0000"
+rdma_configure_single_port: False
+rdma_configure_dual_ports: False
+rdma_port1: "eth"
+rdma_port2: "eth"

@@ -11,6 +11,33 @@
 - name: add infiniband udev rules
   template: src=90-rdma.rules dest=/etc/udev/rules.d/90-rdma.rules backup=yes owner=root mode=0644
 
+## Configure Mellanox Ports for Ethernet
+
+- name: find mellanox PCI devices
+  shell: lspci|grep Mellanox|wc -l
+  register: reg_rdma_mellanox_devices
+  always_run: True
+  when: rdma_configure_single_port or rdma_configure_dual_ports
+
+- debug: var=reg_rdma_mellanox_devices
+  when: rdma_configure_single_port or rdma_configure_dual_ports
+
+- name: find mellanox PCI device name - only if we find only one Mellanox device
+  shell: lspci|grep Mellanox|awk '{print $1}'
+  register: reg_rdma_mellanox_device
+  always_run: True
+  when: rdma_configure_single_port or rdma_configure_dual_ports and reg_rdma_mellanox_devices.stdout == "1"
+
+- name: configure port1
+  lineinfile: dest=/etc/rdma/mlx4.conf regexp="^{{ reg_rdma_mellanox_device.stdout }} {{ rdma_port1 }}" line="{{ reg_rdma_mellanox_device.stdout }} {{ rdma_port1 }}" state=present
+  when: rdma_configure_single_port and rdma_configure_dual_ports == False and reg_rdma_mellanox_devices.stdout == "1"
+
+- name: configure port1 and port 2
+  lineinfile: dest=/etc/rdma/mlx4.conf regexp="^{{ reg_rdma_mellanox_device.stdout }} {{ rdma_port1 }} {{ rdma_port2 }}" line="{{ reg_rdma_mellanox_device.stdout }} {{ rdma_port1 }} {{ rdma_port2 }}" state=present
+  when: rdma_configure_dual_ports and rdma_configure_single_port == False and reg_rdma_mellanox_devices.stdout == "1"
+
+##
+
 - name: Enable and start rdma
   service: name=rdma state=started enabled=yes
   when: ansible_virtualization_type != "docker"
