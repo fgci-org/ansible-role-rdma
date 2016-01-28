@@ -4,10 +4,10 @@
 rdma_packages:
  - dapl
  - infiniband-diags
-  - pciutils
-  - perftest
-  - opensm
-  - qperf
+ - pciutils
+ - perftest
+ - opensm
+ - qperf
 
 # Mutually exclusive:
 # set rdma_configure_single_port to True to configure single port mlx cards
