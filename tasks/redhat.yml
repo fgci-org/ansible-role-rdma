@@ -11,6 +11,9 @@
 - name: add infiniband udev rules
   template: src=90-rdma.rules dest=/etc/udev/rules.d/90-rdma.rules backup=yes owner=root mode=0644
 
+- name: add infiniband rdma.conf file
+  template: src=rdma.conf dest=/etc/security/limits.d/rdma.conf backup=yes owner=root mode=0644
+
 ## Configure Mellanox Ports for Ethernet
 
 - name: find mellanox PCI devices
