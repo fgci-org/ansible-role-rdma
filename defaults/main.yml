@@ -16,5 +16,5 @@ rdma_packages:
 rdma_pci_base: "0000"
 rdma_configure_single_port: False
 rdma_configure_dual_ports: False
-rdma_port1: "eth"
-rdma_port2: "eth"
+rdma_port1: "ib"
+rdma_port2: "ib"
