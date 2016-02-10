@@ -21,6 +21,7 @@
   register: reg_rdma_mellanox_devices
   always_run: True
   when: rdma_configure_single_port or rdma_configure_dual_ports
+  changed_when: False
 
 - debug: var=reg_rdma_mellanox_devices
   when: rdma_configure_single_port or rdma_configure_dual_ports
@@ -30,6 +31,7 @@
   register: reg_rdma_mellanox_device
   always_run: True
   when: rdma_configure_single_port or rdma_configure_dual_ports and reg_rdma_mellanox_devices.stdout == "1"
+  changed_when: False
 
 - name: configure port1
   lineinfile: dest=/etc/rdma/mlx4.conf regexp="^{{ reg_rdma_mellanox_device.stdout }} {{ rdma_port1 }}" line="{{ reg_rdma_mellanox_device.stdout }} {{ rdma_port1 }}" state=present
