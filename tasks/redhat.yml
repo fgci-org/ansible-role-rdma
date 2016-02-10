@@ -42,9 +42,9 @@
 ##
 
 - name: Enable and start rdma
-  service: name=rdma state=started enabled=yes
-  when: ansible_virtualization_type != "docker"
+  service: name=rdma state={{ rdma_service_state }} enabled={{ rdma_service_enabled }}
+  when: ansible_virtualization_type != "docker" and rdma_manage_rdma
 
 - name: Enable and start opensm
-  service: name=opensm state=started enabled=yes
-  when: ansible_virtualization_type != "docker"
+  service: name=opensm state={{ rdma_opensm_state }} enabled={{ rdma_opensm_enabled }}
+  when: ansible_virtualization_type != "docker" and rdma_manage_opensm

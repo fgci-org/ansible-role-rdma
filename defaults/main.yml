@@ -18,3 +18,11 @@ rdma_configure_single_port: False
 rdma_configure_dual_ports: False
 rdma_port1: "ib"
 rdma_port2: "ib"
+
+rdma_manage_rdma: True
+rdma_manage_opensm: True
+rdma_service_state: "started"
+rdma_service_enabled: "yes"
+rdma_opensm_state: "started"
+rdma_opensm_enabled: "yes"
+
