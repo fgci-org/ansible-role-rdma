@@ -13,6 +13,7 @@
 
 - name: add infiniband rdma.conf file
   template: src=rdma.conf dest=/etc/security/limits.d/rdma.conf backup=yes owner=root mode=0644
+  when: rdma_limits
 
 ## Configure Mellanox Ports for Ethernet
 

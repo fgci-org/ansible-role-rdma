@@ -25,4 +25,4 @@ rdma_service_state: "started"
 rdma_service_enabled: "yes"
 rdma_opensm_state: "started"
 rdma_opensm_enabled: "yes"
-
+rdma_limits: False
