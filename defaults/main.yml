@@ -26,3 +26,5 @@ rdma_service_enabled: "yes"
 rdma_opensm_state: "started"
 rdma_opensm_enabled: "yes"
 rdma_limits: False
+
+rdma_lspci_path: "/usr/sbin/lspci"
