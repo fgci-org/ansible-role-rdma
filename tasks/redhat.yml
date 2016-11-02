@@ -18,7 +18,7 @@
 ## Configure Mellanox Ports for Ethernet
 
 - name: find mellanox PCI devices
-  shell: lspci|grep Mellanox|wc -l
+  shell: /usr/sbin/lspci|grep Mellanox|wc -l
   register: reg_rdma_mellanox_devices
   always_run: True
   when: rdma_configure_single_port or rdma_configure_dual_ports
