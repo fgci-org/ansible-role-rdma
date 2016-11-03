@@ -11,6 +11,11 @@ Requirements
 Role Variables
 --------------
 
+Enable this role by setting
+<pre>
+rdma_enabled: True
+</pre>
+
 
 Dependencies
 ------------

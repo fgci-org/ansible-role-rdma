@@ -28,3 +28,6 @@ rdma_opensm_enabled: "yes"
 rdma_limits: False
 
 rdma_lspci_path: "/usr/sbin/lspci"
+
+infiniband_available: False
+rdma_enabled: "{{ infiniband_available }}"
