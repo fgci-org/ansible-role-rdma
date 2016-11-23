@@ -20,7 +20,7 @@
 - name: find mellanox PCI devices
   shell: "{{ rdma_lspci_path }}|grep Mellanox|wc -l"
   register: reg_rdma_mellanox_devices
-  always_run: True
+  check_mode: yes
   when: rdma_configure_single_port or rdma_configure_dual_ports
   changed_when: False
 
@@ -30,7 +30,7 @@
 - name: find mellanox PCI device name - only if we find only one Mellanox device
   shell: "{{ rdma_lspci_path }}|grep Mellanox|awk '{print $1}'"
   register: reg_rdma_mellanox_device
-  always_run: True
+  check_mode: yes
   when: rdma_configure_single_port or rdma_configure_dual_ports and reg_rdma_mellanox_devices.stdout == "1"
   changed_when: False
 
