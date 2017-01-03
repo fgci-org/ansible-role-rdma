@@ -1,0 +1,7 @@
+---
+# Variables for RHEL RDMA stack
+
+rdma_core_packages:
+ - rdma
+
+rdma_service_name: "rdma"

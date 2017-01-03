@@ -2,7 +2,8 @@
 # tasks file for ansible-role-rdma
 #
 - name: install rdma
-  package: name=rdma state=present
+  package: name={{ item }} state=present
+  with_items: "{{ rdma_core_packages }}"
 
 - name: install extra rdma packages
   package: pkg={{ item }} state=present
@@ -45,7 +46,7 @@
 ##
 
 - name: Manage the rdma service
-  service: name=rdma state={{ rdma_service_state }} enabled={{ rdma_service_enabled }}
+  service: name="{{ rdma_service_name }}" state={{ rdma_service_state }} enabled={{ rdma_service_enabled }}
   when: ansible_virtualization_type != "docker" and rdma_manage_rdma
 
 - name: Manage the opensm service

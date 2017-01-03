@@ -1,0 +1,7 @@
+---
+# Variables for Mellanox OFED RDMA stack
+
+rdma_core_packages:
+ - mlnx-ofa_kernel
+
+rdma_service_name: "openibd"
