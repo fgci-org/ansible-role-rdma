@@ -50,5 +50,5 @@
   when: ansible_virtualization_type != "docker" and rdma_manage_rdma
 
 - name: Manage the opensm service
-  service: name=opensm state={{ rdma_opensm_state }} enabled={{ rdma_opensm_enabled }}
+  service: name="{{ rdma_opensm_service }}" state={{ rdma_opensm_state }} enabled={{ rdma_opensm_enabled }}
   when: ansible_virtualization_type != "docker" and rdma_manage_opensm
