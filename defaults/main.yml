@@ -1,6 +1,11 @@
 ---
 # defaults file for ansible-role-rdma
 
+# The type of RDMA setup used. Allowed values are
+# el - The out of the box IB/RDMA stack from RHEL
+# mlnx_ofed - Mellanox OFED
+rdma_type: "el"
+
 rdma_packages:
  - dapl
  - infiniband-diags
