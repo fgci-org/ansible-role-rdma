@@ -6,3 +6,4 @@ rdma_core_packages:
 
 rdma_service_name: "rdma"
 rdma_opensm_service: "opensm"
+rdma_opensm_partitions_conf_path: "/etc/rdma/partitions.conf"
