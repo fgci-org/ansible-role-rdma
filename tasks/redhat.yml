@@ -49,6 +49,15 @@
   service: name="{{ rdma_service_name }}" state={{ rdma_service_state }} enabled={{ rdma_service_enabled }}
   when: ansible_virtualization_type != "docker" and rdma_manage_rdma
 
+- name: Generate the OpenSM partition configuration file
+  template:
+    src=partitions.conf.j2
+    dest="{{ rdma_opensm_partitions_conf_path }}"
+    owner=root
+    mode=0644
+  when: rdma_manage_opensm
+  notify: restart opensm
+
 - name: Manage the opensm service
   service: name="{{ rdma_opensm_service }}" state={{ rdma_opensm_state }} enabled={{ rdma_opensm_enabled }}
   when: ansible_virtualization_type != "docker" and rdma_manage_opensm

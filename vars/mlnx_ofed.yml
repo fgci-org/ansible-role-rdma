@@ -6,3 +6,4 @@ rdma_core_packages:
 
 rdma_service_name: "openibd"
 rdma_opensm_service: "opensmd"
+rdma_opensm_partitions_conf_path: "/etc/opensm/partitions.conf"
