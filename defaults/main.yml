@@ -33,7 +33,7 @@ rdma_opensm_state: "started"
 rdma_opensm_enabled: "yes"
 # If you want additional IB partitions (default is created
 # unconditionally), add them here, like the following:
-rdma_opensm_partlist: {}
+rdma_opensm_partlist: []
 #   - "lnet1=0x80a1, ipoib: ALL=full;"
 #   - "lnet2=0x80b1, ipoib: ALL=full;"
 
