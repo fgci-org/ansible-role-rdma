@@ -2,14 +2,14 @@
 # tasks file for ansible-role-rdma
 #
 - name: install rdma
-  package: 
-    name: "{{ item }}" 
+  package:
+    name: "{{ item }}"
     state: present
   with_items: "{{ rdma_core_packages }}"
 
 - name: install extra rdma packages
-  package: 
-    pkg: "{{ item }}" 
+  package:
+    pkg: "{{ item }}"
     state: present
   with_items: "{{ rdma_packages }}"
 
@@ -39,7 +39,7 @@
   when: rdma_configure_single_port or rdma_configure_dual_ports
   changed_when: False
 
-- debug: var=reg_rdma_mellanox_devices
+- debug: var=reg_rdma_mellanox_devices verbosity=1
   when: rdma_configure_single_port or rdma_configure_dual_ports
 
 - name: find mellanox PCI device name - only if we find only one Mellanox device
@@ -56,8 +56,8 @@
     line: '{{ reg_rdma_mellanox_device.stdout }} {{ rdma_port1 }}'
     state: present
   when: 
-    - rdma_configure_single_port 
-    - rdma_configure_dual_ports == False 
+    - rdma_configure_single_port
+    - rdma_configure_dual_ports == False
     - reg_rdma_mellanox_devices.stdout == "1"
 
 - name: configure port1 and port 2
@@ -66,9 +66,9 @@
     regexp: '^{{ reg_rdma_mellanox_device.stdout }} {{ rdma_port1 }} {{ rdma_port2 }}'
     line: '{{ reg_rdma_mellanox_device.stdout }} {{ rdma_port1 }} {{ rdma_port2 }}'
     state: present
-  when: 
-    - rdma_configure_dual_ports 
-    - rdma_configure_single_port == False 
+  when:
+    - rdma_configure_dual_ports
+    - rdma_configure_single_port == False
     - reg_rdma_mellanox_devices.stdout == "1"
 
 ##
@@ -78,8 +78,8 @@
     name: "{{ rdma_service_name }}"
     state: "{{ rdma_service_state }}"
     enabled: "{{ rdma_service_enabled }}"
-  when: 
-    - ansible_virtualization_type != "docker" 
+  when:
+    - ansible_virtualization_type != "docker"
     - rdma_manage_rdma
 
 - name: Generate the OpenSM partition configuration file
@@ -97,5 +97,5 @@
     state: "{{ rdma_opensm_state }}"
     enabled: "{{ rdma_opensm_enabled }}"
   when: 
-    - ansible_virtualization_type != "docker" 
+    - ansible_virtualization_type != "docker"
     - rdma_manage_opensm
