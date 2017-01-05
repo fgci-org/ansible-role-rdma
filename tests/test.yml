@@ -4,5 +4,8 @@
    remote_user: root
    vars:
      - infiniband_available: True
+     - rdma_opensm_partlist:
+       - "lnet1=0x80a1, ipoib: ALL=full;"
+       - "lnet2=0x80b1, ipoib: ALL=full;"
    roles:
      - ansible-role-rdma
