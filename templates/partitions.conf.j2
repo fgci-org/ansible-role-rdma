@@ -1,0 +1,7 @@
+# {{ ansible_managed }}
+
+Default=0x7fff, ipoib: ALL=full;
+
+{% for part in rdma_opensm_partlist %}
+{{ part }}
+{% endfor %}
