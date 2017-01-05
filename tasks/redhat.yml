@@ -2,18 +2,32 @@
 # tasks file for ansible-role-rdma
 #
 - name: install rdma
-  package: name={{ item }} state=present
+  package: 
+    name: "{{ item }}" 
+    state: present
   with_items: "{{ rdma_core_packages }}"
 
 - name: install extra rdma packages
-  package: pkg={{ item }} state=present
+  package: 
+    pkg: "{{ item }}" 
+    state: present
   with_items: "{{ rdma_packages }}"
 
 - name: add infiniband udev rules
-  template: src=90-rdma.rules dest=/etc/udev/rules.d/90-rdma.rules backup=yes owner=root mode=0644
+  template:
+    src: 90-rdma.rules
+    dest: /etc/udev/rules.d/90-rdma.rules
+    backup: yes
+    owner: root
+    mode: 0644
 
 - name: add infiniband rdma.conf file
-  template: src=rdma.conf dest=/etc/security/limits.d/rdma.conf backup=yes owner=root mode=0644
+  template:
+    src: rdma.conf
+    dest: /etc/security/limits.d/rdma.conf
+    backup: yes
+    owner: root
+    mode: 0644
   when: rdma_limits
 
 ## Configure Mellanox Ports for Ethernet
@@ -36,28 +50,52 @@
   changed_when: False
 
 - name: configure port1
-  lineinfile: dest=/etc/rdma/mlx4.conf regexp="^{{ reg_rdma_mellanox_device.stdout }} {{ rdma_port1 }}" line="{{ reg_rdma_mellanox_device.stdout }} {{ rdma_port1 }}" state=present
-  when: rdma_configure_single_port and rdma_configure_dual_ports == False and reg_rdma_mellanox_devices.stdout == "1"
+  lineinfile:
+    dest: /etc/rdma/mlx4.conf
+    regexp: '^{{ reg_rdma_mellanox_device.stdout }} {{ rdma_port1 }}'
+    line: '{{ reg_rdma_mellanox_device.stdout }} {{ rdma_port1 }}'
+    state: present
+  when: 
+    - rdma_configure_single_port 
+    - rdma_configure_dual_ports == False 
+    - reg_rdma_mellanox_devices.stdout == "1"
 
 - name: configure port1 and port 2
-  lineinfile: dest=/etc/rdma/mlx4.conf regexp="^{{ reg_rdma_mellanox_device.stdout }} {{ rdma_port1 }} {{ rdma_port2 }}" line="{{ reg_rdma_mellanox_device.stdout }} {{ rdma_port1 }} {{ rdma_port2 }}" state=present
-  when: rdma_configure_dual_ports and rdma_configure_single_port == False and reg_rdma_mellanox_devices.stdout == "1"
+  lineinfile:
+    dest: /etc/rdma/mlx4.conf
+    regexp: '^{{ reg_rdma_mellanox_device.stdout }} {{ rdma_port1 }} {{ rdma_port2 }}'
+    line: '{{ reg_rdma_mellanox_device.stdout }} {{ rdma_port1 }} {{ rdma_port2 }}'
+    state: present
+  when: 
+    - rdma_configure_dual_ports 
+    - rdma_configure_single_port == False 
+    - reg_rdma_mellanox_devices.stdout == "1"
 
 ##
 
 - name: Manage the rdma service
-  service: name="{{ rdma_service_name }}" state={{ rdma_service_state }} enabled={{ rdma_service_enabled }}
-  when: ansible_virtualization_type != "docker" and rdma_manage_rdma
+  service:
+    name: "{{ rdma_service_name }}"
+    state: "{{ rdma_service_state }}"
+    enabled: "{{ rdma_service_enabled }}"
+  when: 
+    - ansible_virtualization_type != "docker" 
+    - rdma_manage_rdma
 
 - name: Generate the OpenSM partition configuration file
   template:
-    src=partitions.conf.j2
-    dest="{{ rdma_opensm_partitions_conf_path }}"
-    owner=root
-    mode=0644
+    src: partitions.conf.j2
+    dest: "{{ rdma_opensm_partitions_conf_path }}"
+    owner: root
+    mode: 0644
   when: rdma_manage_opensm
   notify: restart opensm
 
 - name: Manage the opensm service
-  service: name="{{ rdma_opensm_service }}" state={{ rdma_opensm_state }} enabled={{ rdma_opensm_enabled }}
-  when: ansible_virtualization_type != "docker" and rdma_manage_opensm
+  service:
+    name: "{{ rdma_opensm_service }}"
+    state: "{{ rdma_opensm_state }}"
+    enabled: "{{ rdma_opensm_enabled }}"
+  when: 
+    - ansible_virtualization_type != "docker" 
+    - rdma_manage_opensm
