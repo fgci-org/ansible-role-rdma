@@ -2,5 +2,7 @@
 
  - hosts: localhost
    remote_user: root
+   vars:
+     - infiniband_available: True
    roles:
      - ansible-role-rdma
