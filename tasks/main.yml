@@ -6,5 +6,5 @@
   include_vars:
     file: "{{ rdma_type }}.yml"
 
-- include: redhat.yml
+- include_tasks: redhat.yml
   when: ansible_os_family == "RedHat" and rdma_enabled
