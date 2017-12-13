@@ -71,6 +71,23 @@
     - rdma_configure_single_port == False
     - reg_rdma_mellanox_devices.stdout == "1"
 
+
+- name: Do not fail by tying to load driver for non-existent mlx5_fpga
+  lineinfile:
+    path: /etc/infiniband/openib.conf
+    regexp: '^MLX5_FPGA_LOAD='
+    line: 'MLX5_FPGA_LOAD=no'
+    state: present
+  when: rdma_type == 'mlnx_ofed'
+
+- name: Do not fail by trying to load driver for mlx5
+  lineinfile:
+    path: /etc/infiniband/openib.conf
+    regexp: '^MLX5_LOAD='
+    line: 'MLX5_LOAD=no'
+    state: present
+  when: rdma_type == 'mlnx_ofed'
+
 ##
 
 - name: Manage the rdma service
