@@ -2,4 +2,4 @@
 
 - name: restart opensm
   service: name="{{ rdma_opensm_service }}" state=restarted
-  when: rdma_opensm_enabled == "yes"
+  when: rdma_opensm_enabled == "yes" and ansible_connection != 'chroot'

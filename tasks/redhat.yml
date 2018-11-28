@@ -97,6 +97,13 @@
     enabled: "{{ rdma_service_enabled }}"
   when:
     - ansible_virtualization_type != "docker"
+    - ansible_connection != 'chroot'
+    - rdma_manage_rdma
+
+- name: Enable the RDMA service on chroots
+  command: systemctl enable {{ rdma_service_name }}
+  when:
+    - ansible_connection == 'chroot'
     - rdma_manage_rdma
 
 - name: Generate the OpenSM partition configuration file
@@ -115,4 +122,11 @@
     enabled: "{{ rdma_opensm_enabled }}"
   when: 
     - ansible_virtualization_type != "docker"
+    - ansible_connection != 'chroot'
+    - rdma_manage_opensm
+
+- name: Enable the OpenSM service on chroots
+  command: systemctl enable {{ rdma_opensm_service }}
+  when:
+    - ansible_connection == 'chroot'
     - rdma_manage_opensm
