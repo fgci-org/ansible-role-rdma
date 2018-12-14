@@ -130,3 +130,16 @@
   when:
     - ansible_connection == 'chroot'
     - rdma_manage_opensm
+
+# The MLNX_OFED init script won't work with bootstrap images since
+# kernel modules aren't symlinks and thus the script thinks the
+# modules don't belong to MLNX_OFED.  However, the script has a
+# variable FORCE that can be set to force it to ignore this check.
+- name: Fix /etc/init.d/openibd on chroots
+  lineinfile:
+    path: /etc/init.d/openibd
+    regexp: '^FORCE=0$'
+    line: 'FORCE=1'
+  when:
+    - ansible_connection == 'chroot'
+    - rdma_type == 'mlnx_ofed'
