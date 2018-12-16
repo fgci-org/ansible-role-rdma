@@ -6,6 +6,9 @@
 # mlnx_ofed - Mellanox OFED
 rdma_type: "el"
 
+# MLNX_OFED repo name
+mlnx_ofed_repo: 'mlnx_ofed'
+
 rdma_packages:
  - dapl
  - infiniband-diags
