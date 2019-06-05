@@ -35,7 +35,7 @@
     backup: yes
     owner: root
     mode: 0644
-  when: rdma_limits
+  when: rdma_limits|bool
 
 ## Configure Mellanox Ports for Ethernet
 
@@ -43,17 +43,17 @@
   shell: "{{ rdma_lspci_path }}|grep Mellanox|wc -l"
   register: reg_rdma_mellanox_devices
   check_mode: no
-  when: rdma_configure_single_port or rdma_configure_dual_ports
+  when: rdma_configure_single_port|bool or rdma_configure_dual_ports|bool
   changed_when: False
 
 - debug: var=reg_rdma_mellanox_devices verbosity=1
-  when: rdma_configure_single_port or rdma_configure_dual_ports
+  when: rdma_configure_single_port|bool or rdma_configure_dual_ports|bool
 
 - name: find mellanox PCI device name - only if we find only one Mellanox device
   shell: "{{ rdma_lspci_path }}|grep Mellanox|awk '{print $1}'"
   register: reg_rdma_mellanox_device
   check_mode: no
-  when: rdma_configure_single_port or rdma_configure_dual_ports and reg_rdma_mellanox_devices.stdout == "1"
+  when: rdma_configure_single_port|bool or rdma_configure_dual_ports|bool and reg_rdma_mellanox_devices.stdout == "1"
   changed_when: False
 
 - name: configure port1
@@ -63,7 +63,7 @@
     line: '{{ reg_rdma_mellanox_device.stdout }} {{ rdma_port1 }}'
     state: present
   when: 
-    - rdma_configure_single_port
+    - rdma_configure_single_port|bool
     - rdma_configure_dual_ports == False
     - reg_rdma_mellanox_devices.stdout == "1"
 
@@ -74,7 +74,7 @@
     line: '{{ reg_rdma_mellanox_device.stdout }} {{ rdma_port1 }} {{ rdma_port2 }}'
     state: present
   when:
-    - rdma_configure_dual_ports
+    - rdma_configure_dual_ports|bool
     - rdma_configure_single_port == False
     - reg_rdma_mellanox_devices.stdout == "1"
 
@@ -105,13 +105,13 @@
   when:
     - ansible_virtualization_type != "docker"
     - ansible_connection != 'chroot'
-    - rdma_manage_rdma
+    - rdma_manage_rdma|bool
 
 - name: Enable the RDMA service on chroots
   command: systemctl enable {{ rdma_service_name }}
   when:
     - ansible_connection == 'chroot'
-    - rdma_manage_rdma
+    - rdma_manage_rdma|bool
 
 - name: Generate the OpenSM partition configuration file
   template:
@@ -119,7 +119,7 @@
     dest: "{{ rdma_opensm_partitions_conf_path }}"
     owner: root
     mode: 0644
-  when: rdma_manage_opensm
+  when: rdma_manage_opensm|bool
   notify: restart opensm
 
 - name: Manage the opensm service
@@ -130,13 +130,13 @@
   when: 
     - ansible_virtualization_type != "docker"
     - ansible_connection != 'chroot'
-    - rdma_manage_opensm
+    - rdma_manage_opensm|bool
 
 - name: Enable the OpenSM service on chroots
   command: systemctl enable {{ rdma_opensm_service }}
   when:
     - ansible_connection == 'chroot'
-    - rdma_manage_opensm
+    - rdma_manage_opensm|bool
 
 # The MLNX_OFED init script won't work with bootstrap images since
 # kernel modules aren't symlinks and thus the script thinks the
