@@ -9,8 +9,7 @@ RUN yum clean all && \
     yum -y groups mark convert "Development Tools" && \
     yum -y groupinstall "Development Tools" && \
     yum -y install libffi-devel openssl-devel && \
-    yum -y install python-devel MySQL-python sshpass && \
-    yum -y install acl sudo && \
+    yum -y install python-devel MySQL-python sshpass acl sudo && \
     sed -i -e 's/^Defaults.*requiretty/Defaults    !requiretty/' -e 's/^%wheel.*ALL$/%wheel    ALL=(ALL)    NOPASSWD: ALL/' /etc/sudoers && \
     yum -y install PyYAML python-jinja2 python-httplib2 python-keyczar python-setuptools git python-pip && \
     pip install --upgrade pip && \
