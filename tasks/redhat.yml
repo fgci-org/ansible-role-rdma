@@ -10,15 +10,13 @@
 
 - name: install rdma
   package:
-    name: "{{ item }}"
+    name: "{{ rdma_core_packages }}"
     state: present
-  with_items: "{{ rdma_core_packages }}"
 
 - name: install extra rdma packages
   package:
-    pkg: "{{ item }}"
+    name: "{{ rdma_packages }}"
     state: present
-  with_items: "{{ rdma_packages }}"
 
 - name: add infiniband udev rules
   template:
@@ -112,6 +110,12 @@
   when:
     - ansible_connection == 'chroot'
     - rdma_manage_rdma|bool
+
+- name: Make sure opensm is installed if ansible manages it
+  package:
+    name: opensm
+    state: present
+  when: rdma_manage_opensm|bool
 
 - name: Generate the OpenSM partition configuration file
   template:

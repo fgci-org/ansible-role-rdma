@@ -15,7 +15,6 @@ rdma_packages:
  - infiniband-diags
  - pciutils
  - perftest
- - opensm
  - qperf
 
 # Mutually exclusive:
