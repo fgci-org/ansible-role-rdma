@@ -1,5 +1,5 @@
 ---
-# Variables for Mellanox OFED RDMA stack using the RPMS_UPSTREAM_LIBS repo
+# Variables for Mellanox OFED RDMA stack using the RPMS/UPSTREAM_LIBS repo
 
 rdma_core_packages:
  - mlnx-ofed-kernel-only
@@ -7,7 +7,9 @@ rdma_core_packages:
  - libibverbs
  - libibumad
  - librdmacm
+ - ibutils2
+ - infiniband-diags
 
 rdma_service_name: "openibd"
-rdma_opensm_service: "opensm"
-rdma_opensm_partitions_conf_path: "/etc/rdma/partitions.conf"
+rdma_opensm_service: "opensmd"
+rdma_opensm_partitions_conf_path: "/etc/opensm/partitions.conf"
