@@ -4,6 +4,7 @@
 # The type of RDMA setup used. Allowed values are
 # el - The out of the box IB/RDMA stack from RHEL
 # mlnx_ofed - Mellanox OFED
+# mlnx_ofed_upstream_libs - Mellanox OFED with RPMS_UPSTREAM_LIBS repo
 rdma_type: "el"
 
 # MLNX_OFED repo name

@@ -85,7 +85,7 @@
     regexp: '^MLX5_FPGA_LOAD='
     line: 'MLX5_FPGA_LOAD=no'
     state: present
-  when: rdma_type == 'mlnx_ofed'
+  when: rdma_type == 'mlnx_ofed' or rdma_type == 'mlnx_ofed_upstream_libs'
 
 - name: Do not fail by trying to load driver for mlx5
   lineinfile:
@@ -93,7 +93,7 @@
     regexp: '^MLX5_LOAD='
     line: 'MLX5_LOAD=no'
     state: present
-  when: rdma_type == 'mlnx_ofed'
+  when: rdma_type == 'mlnx_ofed' or rdma_type == 'mlnx_ofed_upstream_libs'
 
 ##
 
@@ -149,4 +149,4 @@
     line: 'FORCE=1'
   when:
     - ansible_connection == 'chroot'
-    - rdma_type == 'mlnx_ofed'
+    - (rdma_type == 'mlnx_ofed' or rdma_type == 'mlnx_ofed_upstream_libs')
