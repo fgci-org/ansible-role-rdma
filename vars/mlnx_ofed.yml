@@ -2,7 +2,14 @@
 # Variables for Mellanox OFED RDMA stack
 
 rdma_core_packages:
- - mlnx-ofa_kernel
+  - mlnx-ofed-kernel-only
+  - libibverbs
+  - libmlx4
+  - libmlx5
+  - libibumad
+  - librdmacm
+  - ibutils2
+  - infiniband-diags
 
 rdma_service_name: "openibd"
 rdma_opensm_service: "opensmd"
