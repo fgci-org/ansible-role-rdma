@@ -9,6 +9,7 @@ rdma_core_packages:
  - librdmacm
  - ibutils2
  - infiniband-diags
+ - opensm-libs
 
 rdma_service_name: "openibd"
 rdma_opensm_service: "opensmd"
