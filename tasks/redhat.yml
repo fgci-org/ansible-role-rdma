@@ -93,6 +93,34 @@
     state: present
   when: rdma_type == 'mlnx_ofed' or rdma_type == 'mlnx_ofed_upstream_libs'
 
+- name: Do not load ib_srp (scsi over RDMA) module
+  lineinfile:
+    path: /etc/rdma/rdma.conf
+    regexp: '^SRP_LOAD='
+    line: 'SRP_LOAD=no'
+    state: present
+
+- name: Do not load ib_srpt (scsi over RDMA target) module
+  lineinfile:
+    path: /etc/rdma/rdma.conf
+    regexp: '^SRPT_LOAD='
+    line: 'SRPT_LOAD=no'
+    state: present
+
+- name: Do not load ib_iser (iscsi over RDMA) module
+  lineinfile:
+    path: /etc/rdma/rdma.conf
+    regexp: '^ISER_LOAD='
+    line: 'ISER_LOAD=no'
+    state: present
+
+- name: Do not load ib_isert (iscsi over RDMA target) module
+  lineinfile:
+    path: /etc/rdma/rdma.conf
+    regexp: '^ISERT_LOAD='
+    line: 'ISERT_LOAD=no'
+    state: present
+
 ##
 
 - name: Manage the rdma service
