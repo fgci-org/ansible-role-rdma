@@ -8,9 +8,10 @@
     state: absent
   when: rdma_type == 'el'
 
+  # if rdma_core_packages is not defined use the ones from vars
 - name: install rdma
   package:
-    name: "{{ rdma_core_packages }}"
+    name: "{{ rdma_core_packages | default(role_rdma_core_packages) }}"
     state: present
 
 - name: install extra rdma packages
