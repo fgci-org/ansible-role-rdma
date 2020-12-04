@@ -1,7 +1,7 @@
 ---
 # Variables for Mellanox OFED RDMA stack using the RPMS/UPSTREAM_LIBS repo
 
-rdma_core_packages:
+role_rdma_core_packages:
  - mlnx-ofed-kernel-only
  - rdma-core
  - libibverbs
