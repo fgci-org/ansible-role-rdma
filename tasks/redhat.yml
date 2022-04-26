@@ -65,6 +65,7 @@
     - rdma_configure_single_port|bool
     - rdma_configure_dual_ports == False
     - reg_rdma_mellanox_devices.stdout == "1"
+    - mlnx_ofed_ver == "4"
 
 - name: configure port1 and port 2
   lineinfile:
@@ -76,6 +77,7 @@
     - rdma_configure_dual_ports|bool
     - rdma_configure_single_port == False
     - reg_rdma_mellanox_devices.stdout == "1"
+    - mlnx_ofed_ver == "4"
 
 
 - name: Do not fail by tying to load driver for non-existent mlx5_fpga
@@ -92,7 +94,7 @@
     regexp: '^MLX5_LOAD='
     line: 'MLX5_LOAD=no'
     state: present
-  when: rdma_type == 'mlnx_ofed' or rdma_type == 'mlnx_ofed_upstream_libs'
+  when: (rdma_type == 'mlnx_ofed' or rdma_type == 'mlnx_ofed_upstream_libs') and mlnx_ofed_ver == '4'
 
 - name: Do not load ib_srp (scsi over RDMA) module
   lineinfile:
@@ -100,6 +102,7 @@
     regexp: '^SRP_LOAD='
     line: 'SRP_LOAD=no'
     state: present
+    create: yes
 
 - name: Do not load ib_srpt (scsi over RDMA target) module
   lineinfile:
@@ -107,6 +110,7 @@
     regexp: '^SRPT_LOAD='
     line: 'SRPT_LOAD=no'
     state: present
+    create: yes
 
 - name: Do not load ib_iser (iscsi over RDMA) module
   lineinfile:
@@ -114,6 +118,7 @@
     regexp: '^ISER_LOAD='
     line: 'ISER_LOAD=no'
     state: present
+    create: yes
 
 - name: Do not load ib_isert (iscsi over RDMA target) module
   lineinfile:
@@ -121,6 +126,7 @@
     regexp: '^ISERT_LOAD='
     line: 'ISERT_LOAD=no'
     state: present
+    create: yes
 
 ##
 

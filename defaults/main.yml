@@ -10,6 +10,10 @@ rdma_type: "el"
 # MLNX_OFED repo name
 mlnx_ofed_repo: 'mlnx_ofed'
 
+# originally this has been written to support Mofed 4.x series (when using mlnx_ofed). 
+# If using newer 5.x series, setup that as variable.
+mlnx_ofed_ver: '4'
+
 rdma_packages:
  - dapl
  - infiniband-diags
